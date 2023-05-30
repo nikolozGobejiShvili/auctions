@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Active Listings</h2>
+<ul>
+    {% for post in posts %}
+        <li>
+            <h3><a href="{% url 'post-details' post.pk %}">{{ post.title }}</a></h3>
+            <p>Price: {{ post.price }}</p>
+            <p>Category: {{ post.category }}</p>
+            <p>Posted by: {{ post.user.username }}</p>
+            <p>Created at: {{ post.created_at }}</p>
+            <img src="{{ post.thumbnail.url }}" alt="Thumbnail">
+            <hr>
+            <h4>Comments:</h4>
+            <ul>
+                {% for comment in comments %}
+                    <li class="comment">
+                        <p>{{ comment.body }}</p>
+                        <p>Posted by: {{ comment.user.username }}</p>
+                        <p>Posted at: {{ comment.created_at }}</p>
+                    </li>
+                {% empty %}
+                    <li>No comments yet.</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% empty %}
+        <li>No posts available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
